@@ -5,6 +5,9 @@ namespace App\Http\Controllers\User;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Slider;
+use App\Models\Blog;
+
+use Mail;
 
 class UserController extends Controller
 {
@@ -16,7 +19,8 @@ class UserController extends Controller
     public function index()
     {
         $slider = Slider::where('status', '0')->get();
-        return view('user.index', compact('slider'));
+        $blogs = Blog::all();
+        return view('user.index', compact('slider', 'blogs'));
     }
 
     /**
@@ -46,9 +50,33 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function form()
     {
-        //
+        return view('user.form');
+    }
+
+    public function contactus(Request $request)
+    {
+
+            $request->validate([
+                'name'=>'required',
+                'email'=>'required',
+                'subject'=>'required',
+                'message'=>'required',
+            ]);
+            $data = array(
+                'name'=>$request->name,
+                'email'=>$request->email,
+                'subject'=>$request->subject,
+                'message'=>$request->message,
+            );
+            
+            Mail::send('mail', $data, function($msg){
+                $msg->to('samsadalam272@gmail.com', 'shamskhus')->subject('Contact Us');
+                $msg->from('samsadalam272@gmail.com', 'testing')->subject('Contact Us');
+            });
+            return redirect()->route('user-form');
+
     }
 
     /**

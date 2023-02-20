@@ -54,7 +54,7 @@
             <div class="container-fluid">
 
 
-                <a class="btn btn-primary mb-2" href="{{ route('admin.slider.index') }}">
+                <a class="btn btn-primary mb-2" href="{{ route('slider.index') }}">
                     Back
                 </a>
 
@@ -65,20 +65,23 @@
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <form action="{{ route('admin.slider.store') }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('slider.store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
                                 <div class="mb-3">
                                   <label class="form-label">Title</label>
                                   <input type="text" class="form-control" name="title">
+                                  <strong class="text-danger">{{ $errors->first('title') }}</strong>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Description</label>
                                     <textarea name="description" class="form-control" rows="3"></textarea>
-                                  </div>
+                                  <strong class="text-danger">{{ $errors->first('description') }}</strong>
+                                </div>
                                   <div class="mb-3">
                                     <label class="form-label">Image</label>
                                     <input type="file" class="form-control" name="image"/>
-                                  </div>
+                                  <strong class="text-danger">{{ $errors->first('image') }}</strong>
+                                </div>
                                   <div class="mb-3">
                                     <label class="form-label">Status</label>
                                     <input type="checkbox" name="status" style="width: 30px; hieght:30px;" />

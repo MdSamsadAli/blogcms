@@ -4,11 +4,22 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Slider;
+use App\Http\Requests\BlogFormRequest;
+use Illuminate\Support\Facades\File;
 use App\Models\Blog;
+use App\Services\BlogService;
 
-class AdminController extends Controller
+
+class BlogController extends Controller
 {
+
+    protected $blog;
+
+    public function __construct(BlogService $blogService)
+    {
+        $this->blogService = $blogService;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,9 +28,8 @@ class AdminController extends Controller
     public function index()
     {
         //
-        $slider = Slider::all();
-        $blogs = Blog::all();
-        return view('admin.dashboard', compact('slider', 'blogs'));
+        return $this->blogService->all();
+        
     }
 
     /**
@@ -29,8 +39,7 @@ class AdminController extends Controller
      */
     public function create()
     {
-        //
-        
+        return view('admin.blog.create');
     }
 
     /**
@@ -39,9 +48,9 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BlogFormRequest $request)
     {
-        //
+        return $this->blogService->createBlog($request);
     }
 
     /**
@@ -64,6 +73,7 @@ class AdminController extends Controller
     public function edit($id)
     {
         //
+        return $this->blogService->get($id);
     }
 
     /**
@@ -73,9 +83,9 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BlogFormRequest $request, $id)
     {
-        //
+        return $this->blogService->updateBlog($request, $id);
     }
 
     /**
@@ -86,6 +96,6 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return $this->blogService->delete($id);
     }
 }

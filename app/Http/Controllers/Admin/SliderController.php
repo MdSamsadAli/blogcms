@@ -7,14 +7,22 @@ use App\Http\Requests\SliderFormRequest;
 use Illuminate\Http\Request;
 use App\Models\Slider;
 use Illuminate\Support\Facades\File;
+use App\Services\SliderService;
 
 
 class SliderController extends Controller
 {
+
+    protected $slider;
+
+    public function __construct(SliderService $sliderService)
+    {
+        $this->sliderService = $sliderService;
+    }
+
     public function index()
     {
-        $sliders = Slider::all();
-        return view('admin.slider.index', compact('sliders'));
+        return $this->sliderService->all();
     }
 
     public function create()
@@ -24,80 +32,21 @@ class SliderController extends Controller
 
     public function store(SliderFormRequest $request)
     {
-
-        $validatedData = $request->validated();
-
-        if($request->hasFile('image')){
-            $file = $request->file('image');
-            $ext = $file->getClientOriginalExtension();
-            $filename = time() .'.'.$ext;
-            $file->move('uploads/slider/', $filename);
-            $validatedData['image'] = "uploads/slider/$filename";
-        }
-
-        $validatedData['status'] = $request->status == true ? '1' : '0';
-
-        Slider::create([
-            'title'=>$validatedData['title'],
-            'descripition'=>$validatedData['description'],
-            'image'=>$validatedData['image'],
-            'status'=>$validatedData['status'],
-        ]);
-
-        return redirect()->route('admin.slider.index');
-        
+        return $this->sliderService->createSlider($request);
     }
 
     public function edit($id)
     {
-        $slider = Slider::find($id);
-        return view('admin.slider.edit', compact('slider'));
+        return $this->sliderService->get($id);
     }
 
     public function update(SliderFormRequest $request, $id)
     {
-        $slider = Slider::find($id);
-        $validatedData = $request->validated();
-
-        
-        if($request->hasFile('image')){
-
-            $destination = $slider->image;
-
-        if(File::exists($destination)){
-            File::delete($destination);
-        }
-
-
-            $file = $request->file('image');
-            $ext = $file->getClientOriginalExtension();
-            $filename = time() .'.'.$ext;
-            $file->move('uploads/slider/', $filename);
-            $validatedData['image'] = "uploads/slider/$filename";
-        }
-
-        $validatedData['status'] = $request->status == true ? '1' : '0';
-
-        Slider::where('id', $slider->id)->update([
-            'title'=>$validatedData['title'],
-            'descripition'=>$validatedData['description'],
-            'image'=>$validatedData['image'] ?? $slider->image,
-            'status'=>$validatedData['status'],
-        ]);
-
-        return redirect()->route('admin.slider.index');
+        return $this->sliderService->updateSlider($request, $id);
     }
 
     public function destroy($id)
     {
-        $slider = Slider::find($id);
-
-        $destination = $slider->image;
-        if(File::exists($destination)){
-            File::delete($destination);
-        }
-
-        $slider->delete();
-        return redirect()->route('admin.slider.index');
+        return $this->sliderService->delete($id);
     }
 }

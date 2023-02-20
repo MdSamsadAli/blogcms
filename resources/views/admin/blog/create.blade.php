@@ -54,40 +54,36 @@
             <div class="container-fluid">
 
 
-                <a class="btn btn-primary mb-2" href="{{ route('slider.index') }}">
+                <a class="btn btn-primary mb-2" href="{{ route('blog.index') }}">
                     Back
                 </a>
 
                 <!-- DataTales Example -->
                 <div class="card shadow mb-4">
                     <div class="card-header py-3">
-                        <h6 class="m-0 font-weight-bold text-primary">Update Slider</h6>
+                        <h6 class="m-0 font-weight-bold text-primary">Create More Slider</h6>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
-                            <form action="{{ route('slider.update', $slider->id) }}" method="post" enctype="multipart/form-data">
+                            <form action="{{ route('blog.store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
-                                @method('PUT')
                                 <div class="mb-3">
                                   <label class="form-label">Title</label>
-                                  <input type="text" class="form-control" name="title" value="{{ $slider->title }}">
+                                  <input type="text" class="form-control" name="title">
+                                  <strong class="text-danger">{{ $errors->first('title') }}</strong>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Description</label>
-                                    <textarea name="description" class="form-control" rows="3">{{ $slider->descripition }}</textarea>
-                                  </div>
+                                    <textarea name="description" class="form-control" rows="3"></textarea>
+                                    <strong class="text-danger">{{ $errors->first('description') }}</strong>
+                                </div>
                                   <div class="mb-3">
                                     <label class="form-label">Image</label>
-                                    <input type="file" class="form-control" name="image" value="{{ $slider->image }}"/>
-                                    <img src="{{ asset("$slider->image") }}" alt="" height="100" width="100">
-                                  </div>
-                                  <div class="mb-3">
-                                    <label class="form-label">Status</label>
-                                    <input type="checkbox" name="status" {{ $slider->status == '1' ? 'checked':'' }} style="width: 30px; hieght:30px;" />
-                                    Checked=Hidden, UnChecked=Visible
-
-                                  </div>
-                                <button type="submit" class="btn btn-primary">Upadte</button>
+                                    <input type="file" class="form-control" name="image"/>
+                                    <strong class="text-danger">{{ $errors->first('image') }}</strong>
+                                </div>
+                                  
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </form>
                         </div>
                     </div>

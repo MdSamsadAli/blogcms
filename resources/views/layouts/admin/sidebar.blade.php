@@ -2,7 +2,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard') }}">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('dashboard.index') }}">
         <div class="sidebar-brand-text">Admin Dashboard</div>
     </a>
 
@@ -11,7 +11,7 @@
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item active">
-        <a class="nav-link" href="{{ route('dashboard') }}">
+        <a class="nav-link" href="{{ route('index') }}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>User Dashboard</span></a>
     </li>
@@ -34,7 +34,7 @@
         <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Sliders Components:</h6>
-                <a class="collapse-item" href="{{ route('admin.slider.index') }}">Sliders</a>
+                <a class="collapse-item" href="{{ route('slider.index') }}">Sliders</a>
             </div>
         </div>
     </li>
@@ -44,16 +44,16 @@
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUtilities"
             aria-expanded="true" aria-controls="collapseUtilities">
             <i class="fas fa-fw fa-wrench"></i>
-            <span>Utilities</span>
+            <span>Pet Lovers</span>
         </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
             data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <h6 class="collapse-header">Custom Utilities:</h6>
-                <a class="collapse-item" href="utilities-color.html">Colors</a>
-                <a class="collapse-item" href="utilities-border.html">Borders</a>
-                <a class="collapse-item" href="utilities-animation.html">Animations</a>
-                <a class="collapse-item" href="utilities-other.html">Other</a>
+                <h6 class="collapse-header">Pet Lovers</h6>
+                <a class="collapse-item" href="#">Team Members</a>
+                <a class="collapse-item" href="{{ route('blog.index') }}">Pet Blogs</a>
+                <a class="collapse-item" href="#">Animations</a>
+                <a class="collapse-item" href="#">Other</a>
             </div>
         </div>
     </li>

@@ -54,7 +54,7 @@
             <div class="container-fluid">
 
 
-                <a class="btn btn-primary mb-2" href="{{ route('admin.slider.create') }}">
+                <a class="btn btn-primary mb-2" href="{{ route('slider.create') }}">
                     Add More
                 </a>
 
@@ -86,8 +86,12 @@
                                         </td>
                                         <td>{{ $sliderItem->status == '0' ? 'visible':'Hidden' }}</td>
                                         <td>
-                                            <a href="{{ route('admin.slider.edit', $sliderItem->id) }}" class="btn btn-secondary">Edit</a>
-                                            <a href="{{ route('admin.slider.delete', $sliderItem->id) }}" class="btn btn-danger">Delete</a>
+                                            <a href="{{ route('slider.edit', $sliderItem->id) }}" class="btn btn-secondary">Edit</a>
+                                            <form action="{{ route('slider.destroy', $sliderItem->id) }}" method="post" style="display: inline-block">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit" class="btn btn-danger">Delete</button>
+                                            </form>
                                         </td>
                                     </tr>
                                     @endforeach
